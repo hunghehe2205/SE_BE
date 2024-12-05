@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+datetime
+mysql-connector-python
