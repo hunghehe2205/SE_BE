@@ -106,7 +106,7 @@ class UserModel():
             try:
                 cursor = connection.cursor(dictionary=True)
                 query = """
-                SELECT user_id, username, password
+                SELECT user_id, username, password, role
                 FROM Users
                 WHERE username = %s AND password = %s;
                 """
@@ -119,8 +119,35 @@ class UserModel():
                 return {
                     "message": "Login successful",
                     "user_id": user["user_id"],
-                    "username": user["username"]
+                    "username": user["username"],
+                    'role': user['role']
                 }
+            except Error as e:
+                result = {'error': f'[{e.msg}]'}
+                connection.rollback()
+                return result
+            finally:
+                cursor.close()
+                connection.close()
+        return {'error': 'Failed to connect to the database'}
+
+    def get_user_info(self, user_id: str):
+        connection = self.get_db_connection()
+        if connection:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                query = """
+                SELECT *
+                FROM Users
+                WHERE user_id = %s
+                """
+                cursor.execute(query, (user_id,))
+                user = cursor.fetchone()
+
+                if user is None:
+                    return {'error': 'No user exists'}
+
+                return user
             except Error as e:
                 result = {'error': f'[{e.msg}]'}
                 connection.rollback()

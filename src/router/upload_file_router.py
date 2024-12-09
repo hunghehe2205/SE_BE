@@ -5,7 +5,7 @@ import shutil
 import os
 from models.documents import DocumentsModel
 from schemas.upload_file import UpdateDocumentRequest, UploadResponse, DocumentSummary, GetDocumentsResponse, UpdateDocumentResponse
-
+from fastapi.responses import FileResponse
 upload_directory = "uploadedFile"
 
 router = APIRouter()

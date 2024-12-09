@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from database import db_config
 from models.users import UserModel
+from pydantic import BaseModel
 
 
 def get_connection():
@@ -30,10 +31,24 @@ async def register_user(user_id: str, fullname: str, user_name: str,  password: 
     return result
 
 
-@router.post('/users/{user_name}/{pass_word}', status_code=status.HTTP_200_OK)
-async def login(user_name: str, password: str, user_model: UserModel = Depends(get_connection)):
-    result = user_model.log_in(user_name, password)
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
+
+@router.post('/users/login', status_code=status.HTTP_200_OK)
+async def login(data: LoginRequest, user_model: UserModel = Depends(get_connection)):
+    result = user_model.log_in(data.username, data.password)
+
+    if 'error' in result:
+        raise HTTPException(status_code=400, detail=result['error'])
+
+    return result
+
+
+@router.get('/users', status_code=status.HTTP_200_OK)
+async def get_user_info(user_id: str, user_model: UserModel = Depends(get_connection)):
+    result = user_model.get_user_info(user_id)
     if 'error' in result:
         raise HTTPException(status_code=400, detail=result['error'])
 

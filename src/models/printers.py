@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
-
+''''
 printers = [
     {
         "printer_id": "PRN001",
@@ -18,7 +18,7 @@ printers = [
         "supports_color": 1,
         "supports_duplex": 0,
         "max_paper_size": "A3",
-        "printer_status": "Busy"
+        "printer_status": "Available"
     },
     {
         "printer_id": "PRN003",
@@ -36,7 +36,7 @@ printers = [
         "supports_color": 0,
         "supports_duplex": 1,
         "max_paper_size": "A0",
-        "printer_status": "Out of Paper"
+        "printer_status": "Available"
     },
     {
         "printer_id": "PRN005",
@@ -45,7 +45,7 @@ printers = [
         "supports_color": 1,
         "supports_duplex": 0,
         "max_paper_size": "A4",
-        "printer_status": "Offline"
+        "printer_status": "Available"
     },
     {
         "printer_id": "PRN006",
@@ -63,7 +63,7 @@ printers = [
         "supports_color": 1,
         "supports_duplex": 1,
         "max_paper_size": "A3",
-        "printer_status": "Under Maintenance"
+        "printer_status": "Available"
     },
     {
         "printer_id": "PRN008",
@@ -90,9 +90,10 @@ printers = [
         "supports_color": 1,
         "supports_duplex": 1,
         "max_paper_size": "A3",
-        "printer_status": "Busy"
+        "printer_status": "Available"
     }
 ]
+'''
 
 
 def smaller_paper_sizes(size1: str, size2: str) -> bool:
@@ -148,6 +149,9 @@ class PrinterModel():
         if connection:
             try:
                 cursor = connection.cursor(dictionary=True)
+                print_query = 'SELECT * FROM Printers'
+                cursor.execute(print_query)
+                printers = cursor.fetchall()
                 query = ''' SELECT *
                             FROM PrintSettings
                             WHERE document_id = %s
@@ -166,10 +170,10 @@ class PrinterModel():
                         continue
 
                     # Check color and duplex support
-                    if setting['color'] != printer['supports_color']:
+                    if not ((setting['color'] == printer['supports_color']) or (setting['color'] == 0 and printer['supports_color'] == 1)):
                         continue
 
-                    if setting['duplex'] != printer['supports_duplex']:
+                    if not ((setting['duplex'] == printer['supports_duplex']) or (setting['duplex'] == 0 and printer['supports_duplex'] == 1)):
                         continue
 
                     # Check if the printer supports the required paper size
