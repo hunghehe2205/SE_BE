@@ -48,6 +48,20 @@ CREATE TABLE PrintSettings(
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
+Use software;
+DROP TABLE IF EXISTS PrintingLog;
+CREATE TABLE PrintingLog(
+	document_id VARCHAR(255),
+    printer_id VARCHAR(255),
+    time_updated timestamp default current_timestamp,
+    FOREIGN KEY (document_id) REFERENCES Documents(document_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    FOREIGN KEY (printer_id) REFERENCES Printers(printer_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
 
 Use software;
 DROP PROCEDURE IF EXISTS InsertSettings;
@@ -145,3 +159,7 @@ BEGIN
 	END IF;
 END //
 DELIMITER ;
+
+
+
+
