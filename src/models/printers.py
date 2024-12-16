@@ -1,99 +1,5 @@
 import mysql.connector
 from mysql.connector import Error
-''''
-printers = [
-    {
-        "printer_id": "PRN001",
-        "printer_name": "HP LaserJet 500",
-        "location": "1st Floor, Room 101",
-        "supports_color": 1,
-        "supports_duplex": 1,
-        "max_paper_size": "A4",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN002",
-        "printer_name": "Canon ColorPrint 3000",
-        "location": "2nd Floor, Room 205",
-        "supports_color": 1,
-        "supports_duplex": 0,
-        "max_paper_size": "A3",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN003",
-        "printer_name": "Epson EcoTank L3150",
-        "location": "Ground Floor, Reception",
-        "supports_color": 0,
-        "supports_duplex": 1,
-        "max_paper_size": "A4",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN004",
-        "printer_name": "Brother HL-L2350DW",
-        "location": "3rd Floor, Room 308",
-        "supports_color": 0,
-        "supports_duplex": 1,
-        "max_paper_size": "A0",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN005",
-        "printer_name": "Ricoh SP C261",
-        "location": "4th Floor, Room 410",
-        "supports_color": 1,
-        "supports_duplex": 0,
-        "max_paper_size": "A4",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN006",
-        "printer_name": "Samsung ProXpress M4020ND",
-        "location": "1st Floor, Room 102",
-        "supports_color": 0,
-        "supports_duplex": 1,
-        "max_paper_size": "A1",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN007",
-        "printer_name": "Xerox WorkCentre 6515",
-        "location": "5th Floor, Room 520",
-        "supports_color": 1,
-        "supports_duplex": 1,
-        "max_paper_size": "A3",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN008",
-        "printer_name": "Dell E525w",
-        "location": "2nd Floor, Lab",
-        "supports_color": 1,
-        "supports_duplex": 0,
-        "max_paper_size": "A4",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN009",
-        "printer_name": "Lexmark MB2236adw",
-        "location": "Basement, Storage",
-        "supports_color": 0,
-        "supports_duplex": 1,
-        "max_paper_size": "A4",
-        "printer_status": "Available"
-    },
-    {
-        "printer_id": "PRN010",
-        "printer_name": "Kyocera TASKalfa 2552ci",
-        "location": "3rd Floor, Admin Office",
-        "supports_color": 1,
-        "supports_duplex": 1,
-        "max_paper_size": "A3",
-        "printer_status": "Available"
-    }
-]
-'''
 
 
 def smaller_paper_sizes(size1: str, size2: str) -> bool:
@@ -163,8 +69,6 @@ class PrinterModel():
                 res = []
                 for printer in printers:
                     # Debugging output to see each printer's attributes
-                    print(f"Checking printer: {printer}")
-
                     # Check printer status
                     if printer['printer_status'] != "Available":
                         continue

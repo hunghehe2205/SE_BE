@@ -15,8 +15,15 @@ def get_print_set_connection():
 @router.post("/api/print-job/{documentId}/settings", response_model=PrintSettingsResponse)
 async def save_print_settings(documentId: str, payload: PrintSettings, settings: PrintSettingsModel = Depends(get_print_set_connection)):
     setting_id = settings.generate_setting_id()
+    paper = ''
+    if (payload.paper_size == 1):
+        paper = 'A3'
+    elif (payload.paper_size == 2):
+        paper = 'A4'
+    else:
+        paper = 'A5'
     result = settings.create_setting(
-        documentId, payload.color, payload.copies, payload.duplex, payload.paper_size)
+        documentId, payload.color, payload.copies, payload.duplex, paper)
 
     if 'error' in result:
         raise HTTPException(status_code=400, detail=result['error'])

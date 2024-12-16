@@ -6,7 +6,7 @@ class PrintSettings(BaseModel):
     color: bool
     copies: int
     duplex: bool
-    paper_size: str
+    paper_size: int
 
 
 class PrintSettingsResponse(BaseModel):

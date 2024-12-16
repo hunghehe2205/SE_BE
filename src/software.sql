@@ -5,7 +5,12 @@ CREATE TABLE Users(
 	user_id VARCHAR(255) NOT NULL UNIQUE,
     fullname VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL 
+    password VARCHAR(255) NOT NULL,
+    school_year INT NOT NULL,
+    faculty VARCHAR(255) NOT NULL,
+    remaining_paper INT DEFAULT 10,
+    role VARCHAR(255) DEFAULT 'user',
+    CONSTRAINT chk_role CHECK (role IN ('user', 'admin'))
 );
 
 CREATE TABLE Documents(
@@ -15,6 +20,8 @@ CREATE TABLE Documents(
     file_path VARCHAR(255) NOT NULL,
     user_id VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 Use software;
 DROP TABLE IF EXISTS Printers;
@@ -38,6 +45,8 @@ CREATE TABLE PrintSettings(
     paper_size VARCHAR(255) NOT NULL,
     time_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (document_id) REFERENCES Documents(document_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 Use software;
